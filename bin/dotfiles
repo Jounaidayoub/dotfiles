@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+# Dotfiles backup/restore script
+
+DOTFILES_DIR="$HOME/dotfiles"
+
+backup() {
+  echo "Backing up configs to $DOTFILES_DIR..."
+  
+  cp ~/.zshrc "$DOTFILES_DIR/zsh/zshrc"
+  cp ~/.zshenv "$DOTFILES_DIR/zsh/zshenv"
+  cp ~/.gitconfig "$DOTFILES_DIR/gitconfig"
+  cp ~/.tmux.conf "$DOTFILES_DIR/tmux.conf"
+  
+  echo "Backup complete!"
+}
+
+restore() {
+  echo "Restoring configs from $DOTFILES_DIR..."
+  
+  ln -sf "$DOTFILES_DIR/zsh/zshrc" ~/.zshrc
+  ln -sf "$DOTFILES_DIR/zsh/zshenv" ~/.zshenv
+  ln -sf "$DOTFILES_DIR/gitconfig" ~/.gitconfig
+  ln -sf "$DOTFILES_DIR/tmux.conf" ~/.tmux.conf
+  
+  echo "Restore complete!"
+}
+
+case "$1" in
+  backup) backup ;;
+  restore) restore ;;
+  *) echo "Usage: $0 {backup|restore}" ;;
+esac
