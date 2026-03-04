@@ -85,10 +85,6 @@ for file in ~/dotfiles/zsh/*.zsh; do
   [ -f "$file" ] && source "$file"
 done
 
-# ====== Legacy/compat ======
-# Source bash aliases for compatibility
-[ -f ~/.bash_aliases ] && source ~/.bash_aliases
-[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # ====== Oh My Zsh (load last) ======
 source $ZSH/oh-my-zsh.sh
