@@ -1,12 +1,14 @@
 # eza aliases
-alias ls='eza --color=always --group-directories-first --icons auto'
-alias ll='eza -la  --group-directories-first'
-alias l='eza -bGF --header --git --color=always --group-directories-first --icons auto'
-alias llm='eza -lbGd --header --git --sort=modified --color=always --group-directories-first --icons auto'
-alias la='eza --long --all --group --group-directories-first'
-alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale --color=always --group-directories-first --icons auto'
-alias lS='eza -1 --color=always --group-directories-first --icons auto'
-alias lt='eza --tree --level=2 --color=always --group-directories-first --icons auto'
+alias ls='eza --color=always --group-directories-first --icons'
+alias ll='eza -ll --icons  --group-directories-first'
+alias l='eza -blF --header --git --color=always --group-directories-first --icons'
+alias llm='eza -lbGd --header --git --sort=modified --color=always --group-directories-first --icons' 
+alias la='eza -la --long --all --group --group-directories-first'
+alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale --color=always --group-directories-first --icons'
+
+alias lS='eza -1 --color=always --group-directories-first --icons'
+alias lt='eza --tree --level=2 --color=always --group-directories-first --icons'
+alias l.="eza -a | grep -E '^\.'"
 alias l.="eza -a | grep -E '^\.'"
 
 # General aliases
