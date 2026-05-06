@@ -80,11 +80,23 @@ plugins=(
   zsh-syntax-highlighting
 )
 
+# ====== Oh My Zsh ======
+source $ZSH/oh-my-zsh.sh
+
 # ====== Custom configs from ~/dotfiles ======
 for file in ~/dotfiles/zsh/*.zsh; do
   [ -f "$file" ] && source "$file"
 done
+# bun completions
+[ -s "/home/light/.bun/_bun" ] && source "/home/light/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 
-# ====== Oh My Zsh (load last) ======
-source $ZSH/oh-my-zsh.sh
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+
+# opencode
+export PATH=/home/light/.opencode/bin:$PATH
