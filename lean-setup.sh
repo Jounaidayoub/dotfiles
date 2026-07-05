@@ -49,7 +49,29 @@ corepack enable pnpm
 pnpm -v
 
 
-# 6. Apply Dotfiles
+# 5. Install oh-my-zsh custom plugins
+echo "==> Installing oh-my-zsh plugins..."
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+mkdir -p "$ZSH_CUSTOM/plugins"
+
+[ -d "$ZSH_CUSTOM/plugins/you-should-use" ] || git clone --depth 1 https://github.com/MichaelAquilina/zsh-you-should-use.git "$ZSH_CUSTOM/plugins/you-should-use"
+[ -d "$ZSH_CUSTOM/plugins/fzf-tab" ] || git clone --depth 1 https://github.com/Aloxaf/fzf-tab.git "$ZSH_CUSTOM/plugins/fzf-tab"
+[ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ] || git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+[ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ] || git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+
+# 6. Install fzf (no Homebrew — git clone)
+echo "==> Installing fzf..."
+if [ ! -d "$HOME/.fzf" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+fi
+~/.fzf/install --bin --no-update-rc --no-fish --no-bash
+
+# Fix fzf symlink (Ubuntu package is fdfind, not fd)
+if command -v fdfind &>/dev/null && ! command -v fd &>/dev/null; then
+    sudo ln -sf "$(which fdfind)" /usr/local/bin/fd
+fi
+
+# 7. Apply Dotfiles
 if [ -d "$HOME/dotfiles" ]; then
     echo "==> Applying Dotfiles symlinks..."
     chmod +x "$HOME/dotfiles/bin/dotfiles"

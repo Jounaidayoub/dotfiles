@@ -1,5 +1,5 @@
 # FZF configuration
-export FZF_BASE=/home/linuxbrew/.linuxbrew/opt/fzf
+export FZF_BASE=~/.fzf
 
 # Add completions to fpath (must be before compinit)
 fpath=(/usr/share/zsh/site-functions $fpath)
@@ -10,7 +10,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color=always $realpath'
 
 
 # Open in tmux popup if on tmux, otherwise use --height mode
-export FZF_DEFAULT_OPTS='--height 40% --layout reverse --border top'\
+export FZF_DEFAULT_OPTS='--height 70% --layout reverse --border top'
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 # export FZF_CTRL_T_OPTS="
@@ -20,7 +20,7 @@ export FZF_DEFAULT_OPTS='--height 40% --layout reverse --border top'\
 
 
 
-show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always --icons {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
+show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always --icons {} | head -200; else batcat -n --color=always --line-range :500 {}; fi"
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always --icons {} | head -200'"

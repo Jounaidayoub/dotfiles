@@ -6,6 +6,7 @@ _add_path() {
   esac
 }
 
+_add_path "$HOME/.bin"
 _add_path "$HOME/.local/bin"
 _add_path "$HOME/.opencode/bin"
 
