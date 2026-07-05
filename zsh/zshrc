@@ -28,7 +28,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
+zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
@@ -36,7 +36,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -78,8 +78,6 @@ export ZSH="$HOME/.oh-my-zsh"
 plugins=(
   you-should-use
   git
-  #fzf
-  #fzf-tab
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
@@ -87,8 +85,12 @@ plugins=(
 # Skip slow completion audit
 export ZSH_DISABLE_COMPFIX=true
 
-# ====== Oh My Zsh ======
-source $ZSH/oh-my-zsh.sh
+# Add custom completions to fpath for lazy-loading
+fpath=(~/.zsh/completions ~/.bun $fpath)
+
+# ====== Completion System Initialization ======
+autoload -Uz compinit
+compinit -C
 
 # ====== Secrets (gitignored) ======
 [ -f ~/dotfiles/.secrets ] && source ~/dotfiles/.secrets
@@ -97,8 +99,8 @@ source $ZSH/oh-my-zsh.sh
 for file in ~/dotfiles/zsh/*.zsh; do
   [ -f "$file" ] && source "$file"
 done
-# bun completions
-[ -s "/home/light/.bun/_bun" ] && source "/home/light/.bun/_bun"
+# bun completions (now autoloaded via fpath)
+# [ -s "/home/light/.bun/_bun" ] && source "/home/light/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -131,11 +133,15 @@ export MANROFFOPT="-c"
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:/home/light/.dotnet/tools"
-autoload -U compinit; compinit
-source ~/.fzf-tab/fzf-tab.plugin.zsh
 # Added by Antigravity CLI installer
 export PATH="/home/light/.local/bin:$PATH"
 
+# ====== Manual Plugins Sourcing ======
+source ~/.oh-my-zsh/plugins/git/git.plugin.zsh
+source ~/.oh-my-zsh/custom/plugins/you-should-use/you-should-use.plugin.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.fzf-tab/fzf-tab.plugin.zsh
+
 # fzf key bindings (must be last to avoid being overridden)
 source ~/.fzf/shell/key-bindings.zsh
-
