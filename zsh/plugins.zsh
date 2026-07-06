@@ -21,5 +21,4 @@ if [ ! -d ~/.zsh/completions ]; then
   fi
 fi
 
-# Eza completions
-export FPATH="$HOME/.eza/completions/zsh:$FPATH"
+

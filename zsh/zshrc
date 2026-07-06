@@ -1,14 +1,21 @@
 export PATH="$PATH:$HOME/.fzf/bin"
 
-# Add custom completions to fpath for lazy-loading
-fpath=(~/.zsh/completions ~/.bun $fpath)
-
-# ====== Defer Initialization ======
-source ~/.zsh-defer/zsh-defer.plugin.zsh
+# Add custom completions to fpath (must ALL be before compinit)
+fpath=(
+  ~/.zsh/completions
+  ~/.eza/completions/zsh
+  /usr/share/zsh/site-functions
+  $fpath
+)
 
 # ====== Completion System Initialization ======
 autoload -Uz compinit
-compinit -C
+# Regenerate dump every 24h for fast startup, fresh completions otherwise
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 # Compile zcompdump in the background if it's newer than the compiled version
 if [[ -s ~/.zcompdump && (! -s ~/.zcompdump.zwc || ~/.zcompdump -nt ~/.zcompdump.zwc) ]]; then
@@ -49,15 +56,15 @@ export OPENCODE_ENABLE_EXA=true
 # ====== Antigravity CLI ======
 export PATH="/home/light/.local/bin:$PATH"
 
-# ====== Manual Plugins Sourcing (Deferred for speed) ======
+# ====== Plugins (fzf-tab before syntax-highlighting) ======
 source ~/.oh-my-zsh/plugins/git/git.plugin.zsh
-zsh-defer source ~/.oh-my-zsh/custom/plugins/you-should-use/you-should-use.plugin.zsh
-zsh-defer source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-zsh-defer source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-zsh-defer source ~/.fzf-tab/fzf-tab.plugin.zsh
+source ~/.oh-my-zsh/custom/plugins/you-should-use/you-should-use.plugin.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.fzf-tab/fzf-tab.plugin.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ====== fzf key bindings (must be last to avoid being overridden) ======
-zsh-defer source ~/.fzf/shell/key-bindings.zsh
+source ~/.fzf/shell/key-bindings.zsh
 
 # ====== Utilities & Aliases ======
 alias lzd='lazydocker'
